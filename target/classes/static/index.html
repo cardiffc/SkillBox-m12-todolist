@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ToDo List</title>
+    <script type="text/javascript" src="/js/jquery-3.4.0.min.js"></script>
+    <script type="text/javascript" src="/js/main.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+</head>
+<body>
+<div id="add-task-form">
+    <form>
+        <h2>Добавление дела</h2>
+        <label>Наименование:</label>
+        <input type="text" name="name" value="">
+        <label>Описание</label>
+        <input type="text" name="description" value="">
+        <hr>
+        <button id="save-task">Сохранить</button>
+    </form>
+</div>
+<div id="all-do-form">
+    <form>
+        <h2>Список всех дел</h2>
+
+    </form>
+</div>
+<h1>Список дел</h1>
+<button id="show-add-task-form">Добавить дело</button>
+<br><br>
+<button id="show-all-list">Показать список</button>
+<br><br>
+<button id="delete-task">Удалить дело</button>
+<br><br>
+<button id="clear-list">Очистить список</button>
+<br><br>
+
+<div id="task-list"></div>
+
+</body>
+</html>
