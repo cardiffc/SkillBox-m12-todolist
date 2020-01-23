@@ -37,6 +37,23 @@ public class Storage {
         return false;
     }
 
+    public static boolean modifyDescription(int id, String description) {
+        if (taskList.containsKey(id)) {
+            taskList.get(id).setDescription(description);
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean modifyName (int id, String name) {
+        if (taskList.containsKey(id)) {
+            taskList.get(id).setName(name);
+            return true;
+        }
+        return false;
+
+    }
+
     public static boolean clearList () {
         taskList.clear();
         currentId = 1;

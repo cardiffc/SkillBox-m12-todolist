@@ -23,3 +23,9 @@ method: DELETE
 http://127.0.0.1:8080/tasks/{id}
 method: GET
 ````
+````$xslt
+6. Обновить существующую запись по id
+http://127.0.0.1:8080/tasks/{id}/?name=<<name>>&description=<<description>>
+method: PUT
+params (required): name, description
+````

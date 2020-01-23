@@ -1,4 +1,8 @@
 package main;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.Marker;
+import org.apache.logging.log4j.MarkerManager;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -7,6 +11,8 @@ import java.util.List;
 
 @RestController
 public class TaskController {
+    private static final Logger MARKLOGGER = LogManager.getLogger(TaskController.class);
+    private static final Marker VARS = MarkerManager.getMarker("VARS");
 
     @GetMapping("/tasks/")
     public List<Task> listTasks() {
@@ -43,5 +49,16 @@ public class TaskController {
             return new ResponseEntity(Storage.getAllTasks(), HttpStatus.OK);
         }
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+
     }
+
+    @PutMapping("/tasks/{id}")
+    public ResponseEntity modifyTask (@PathVariable int id,String name,String description)
+    {
+        if (!Storage.modifyName(id, name) || !Storage.modifyDescription(id,description)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        return new ResponseEntity(true, HttpStatus.OK);
+    }
+
 }

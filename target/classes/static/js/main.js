@@ -1,7 +1,8 @@
 $(function(){
 
     const appendTask = function (data){
-        var taskCode = '<a href="#" class="task-link" data-id="'+ data.id + '">' + data.name + '</a><br>';
+        var taskCode = '<a href="#" class="task-link" data-id="'+ data.id + '">' + data.name + '</a>' +
+            '</span><a href="#" class="task-del" data-id="' + data.id + '">X</a><br>';
         $('#task-list').append('<div>' + taskCode + '</div>');
 
     };
@@ -26,30 +27,17 @@ $(function(){
         }
     });
 
-    // Show all do form
-    $('#do-list').click(function (){
-        $('#all-do-form').css('display','flex');
-    });
-
-    // Close all do list
-    $('#all-do-form').click(function(event){
-        if(event.target === this) {
-            $(this).css('display', 'none');
-        }
-    });
-
-
     //Getting task
     $(document).on('click', '.task-link', function(){
         var link = $(this);
         var taskId = link.data('id');
+        $(this).css('pointer-events','none');
         $.ajax({
             method: "GET",
             url: '/tasks/' + taskId,
             success: function(response)
             {
-                var code = '<span>' + response.description + '</span><br>'
-                           + '<button id="delete-task" data-id="'+ taskId +'">Удалить</button>';
+                var code = '<span>' + response.description + '</span><br>';
                 link.parent().append(code);
             },
             error: function(response)
@@ -63,17 +51,24 @@ $(function(){
     });
 
     // Deleting task
-
-    $('#delete-task').click(function () {
-            var link = $(this);
-            var taskID = link.data('taskId');
-           // console.log(taskID);
-            s.ajax({
-               method: "DELETE",
-               url: 'tasks' + taskID
-            });
+    $(document).on('click', '.task-del', function(){
+        var link = $(this);
+        var taskId = link.data('id');
+        $.ajax({
+            method: "DELETE",
+            url: '/tasks/' + taskId,
+            success: function(response){
+               alert("Задача № " + taskId +" удалена!");
+               link.parent().remove();
+            },
+            error: function(response){
+                if(response.status == 404) {
+                    alert('Задача не найдена!');
+                }
+            }
+        });
+        return false;
     });
-
 
     //Adding task
     $('#save-task').click(function()
@@ -103,8 +98,17 @@ $(function(){
         $.ajax({
             method: "DELETE",
             url: '/tasks/all',
-            caches: false
+            caches: false,
+            success: function (response) {
+                alert("Лист очищен, обновите страницу!");
+            },
+            error: function (response) {
+                if(response.status !== 200) {
+                    alert('Внутренняя ошибка!');
+                }
+            }
         });
-        $('form[name=myForm]').trigger('reset');
+        return false;
+
     });
 });
