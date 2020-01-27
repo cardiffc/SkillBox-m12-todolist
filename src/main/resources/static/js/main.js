@@ -8,12 +8,12 @@ $(function(){
     };
 
 //    Loading tasks on load page
-    $.get('/tasks/', function(response)
-    {
-        for(i in response) {
-            appendTask(response[i]);
-        }
-    });
+//     $.get('/tasks/', function(response)
+//     {
+//         for(i in response) {
+//             appendTask(response[i]);
+//         }
+//     });
 
     //Show adding task form
     $('#show-add-task-form').click(function(){
